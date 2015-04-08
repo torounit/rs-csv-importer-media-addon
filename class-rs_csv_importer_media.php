@@ -1,7 +1,7 @@
 <?php
 
 
-Class RS_CSV_Media extends RS_CSV_Importer {
+Class RS_CSV_Importer_Media extends RS_CSV_Importer {
 
 	/** @var  array media caches. */
 	private $media_keys;
