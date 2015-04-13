@@ -1,11 +1,28 @@
 <?php
 
-
+/**
+ *
+ * Class RS_CSV_Importer_Media
+ *
+ * @uses RS_CSV_Importer
+ *
+ */
 Class RS_CSV_Importer_Media extends RS_CSV_Importer {
 
 	/** @var  array media caches. */
 	private $media_keys;
 
+	/** @var  RS_CSV_Media_Cache */
+	private $cache;
+
+
+	public function __construct() {
+		parent::__construct();
+		add_filter( 'ext2type', array( $this, 'ext2type' ) );
+
+		$this->cache = RS_CSV_Media_Cache::get_instance();
+
+	}
 
 	/**
 	 * Insert post and postmeta using `RSCSV_Import_Post_Helper` class.
@@ -29,6 +46,33 @@ Class RS_CSV_Importer_Media extends RS_CSV_Importer {
 	}
 
 	/**
+	 *
+	 * Allowed File Types.
+	 *
+	 * @use ext2type
+	 * @param array $types
+	 *
+	 * ```
+	 * array(
+	 *    'image'       => array( 'jpg', 'jpeg', 'jpe',  'gif',  'png',  'bmp',   'tif',  'tiff', 'ico' ),
+	 *    'audio'       => array( 'aac', 'ac3',  'aif',  'aiff', 'm3a',  'm4a',   'm4b',  'mka',  'mp1',  'mp2',  'mp3', 'ogg', 'oga', 'ram', 'wav', 'wma' ),
+	 *    'video'       => array( '3g2',  '3gp', '3gpp', 'asf', 'avi',  'divx', 'dv',   'flv',  'm4v',   'mkv',  'mov',  'mp4',  'mpeg', 'mpg', 'mpv', 'ogm', 'ogv', 'qt',  'rm', 'vob', 'wmv' ),
+	 *    'document'    => array( 'doc', 'docx', 'docm', 'dotm', 'odt',  'pages', 'pdf',  'xps',  'oxps', 'rtf',  'wp', 'wpd', 'psd' ),
+	 *    'spreadsheet' => array( 'numbers',     'ods',  'xls',  'xlsx', 'xlsm',  'xlsb' ),
+	 *    'interactive' => array( 'swf', 'key',  'ppt',  'pptx', 'pptm', 'pps',   'ppsx', 'ppsm', 'sldx', 'sldm', 'odp' ),
+	 *    'text'        => array( 'asc', 'csv',  'tsv',  'txt' ),
+	 *    'archive'     => array( 'bz2', 'cab',  'dmg',  'gz',   'rar',  'sea',   'sit',  'sqx',  'tar',  'tgz',  'zip', '7z' ),
+	 *    'code'        => array( 'css', 'htm',  'html', 'php',  'js' ),
+	 * );
+	 * ```
+	 *
+	 * @return Array
+	 */
+	public function ext2type( Array $types ) {
+		return apply_filters( 'really_simple_csv_importer_media_ext2type', $types );
+	}
+
+	/**
 	 * @param RSCSV_Import_Post_Helper $h
 	 * @param $meta
 	 *
@@ -38,17 +82,20 @@ Class RS_CSV_Importer_Media extends RS_CSV_Importer {
 
 		foreach ( $meta as $key => $value ) {
 
-			if ( isset( $this->media_keys[ md5( $value ) ] ) ) {
-				$meta[ $key ] = $this->media_keys[ md5( $value ) ];
+			//同一のモノがあった場合は、キャッシュから取ってくる。
+			if ( $this->cache->is_cached( $value ) ) {
+				$meta[ $key ] = $this->cache->get( $value );
 			} else if ( $this->is_media( $value ) ) {
-				$file                              = $h->remoteGet( $value );
-				$meta[ $key ]                      = $h->setAttachment( $file );
-				$this->media_keys[ md5( $value ) ] = $meta[ $key ];
+				$file         = $h->remoteGet( $value );
+				$attachment   = $h->setAttachment( $file );
+				$meta[ $key ] = $attachment;
+				$this->cache->set( $value, $attachment );
 			}
 		}
 
 		return $meta;
 	}
+
 
 	/**
 	 * @param string $value
