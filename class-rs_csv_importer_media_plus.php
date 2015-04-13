@@ -2,15 +2,13 @@
 
 /**
  *
- * Class RS_CSV_Importer_Media
+ * Class RS_CSV_Importer_Media_Plus
  *
  * @uses RS_CSV_Importer
  *
  */
-Class RS_CSV_Importer_Media extends RS_CSV_Importer {
+Class RS_CSV_Importer_Media_Plus extends RS_CSV_Importer {
 
-	/** @var  array media caches. */
-	private $media_keys;
 
 	/** @var  RS_CSV_Media_Cache */
 	private $cache;
@@ -85,14 +83,14 @@ Class RS_CSV_Importer_Media extends RS_CSV_Importer {
 			//同一のモノがあった場合は、キャッシュから取ってくる。
 			if ( $this->cache->is_cached( $value ) ) {
 				$meta[ $key ] = $this->cache->get( $value );
-			} else if ( $this->is_media( $value ) ) {
+			}
+			else if ( $this->is_media( $value ) ) {
 				$file         = $h->remoteGet( $value );
 				$attachment   = $h->setAttachment( $file );
 				$meta[ $key ] = $attachment;
 				$this->cache->set( $value, $attachment );
 			}
 		}
-
 		return $meta;
 	}
 
@@ -110,9 +108,7 @@ Class RS_CSV_Importer_Media extends RS_CSV_Importer {
 				return true;
 			}
 		}
-
 		return false;
 	}
-
 
 }
