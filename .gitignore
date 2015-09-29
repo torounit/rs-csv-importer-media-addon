@@ -1,5 +1,0 @@
-.travis.yml
-phpunit.xml
-bin/install-wp-tests.sh
-tests/bootstrap.php
-tests/test-sample.php
