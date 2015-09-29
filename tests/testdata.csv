@@ -1,2 +1,2 @@
-post_type,post_status,post_title,image,url
-post,publish,wapuu,https://raw.githubusercontent.com/jawordpressorg/wapuu/gh-pages/wapuu-original/wapuu-original.png,https://github.com/jawordpressorg/wapuu/
+post_type,post_status,post_title,image,url,local_image
+post,publish,wapuu,https://raw.githubusercontent.com/jawordpressorg/wapuu/gh-pages/wapuu-original/wapuu-original.png,https://github.com/jawordpressorg/wapuu/,/tmp/wapuu-original.png

@@ -90,6 +90,11 @@ Class RS_CSV_Importer_Media_Plus extends RS_CSV_Importer {
 				$meta[ $key ] = $attachment;
 				$this->cache->set( $value, $attachment );
 			}
+			else if ( file_exists( $value ) ) {
+				$attachment   = $h->setAttachment( $value );
+				$meta[ $key ] = $attachment;
+				$this->cache->set( $value, $attachment );
+			}
 		}
 		return $meta;
 	}

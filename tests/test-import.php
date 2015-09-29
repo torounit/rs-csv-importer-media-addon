@@ -54,6 +54,23 @@ class Import_Test extends WP_UnitTestCase {
 	 * @preserveGlobalState disabled
 	 *
 	 */
+	public function test_local_path_convert() {
+
+		$posts = get_posts();
+		$post = reset($posts);
+		$image = get_post_meta( $post->ID, 'local_image', true );
+		$attachment = get_post( $image );
+		$this->assertEquals( 'attachment', $attachment->post_type );
+
+	}
+
+	/**
+	 *
+	 * @test
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 *
+	 */
 	public function test_url_no_convert() {
 		$posts = get_posts();
 		$post = reset($posts);
