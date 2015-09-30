@@ -2,18 +2,19 @@ language: php
 
 php:
     - 5.3
-    - 5.6
+    - 5.5
 
 env:
-    - WP_VERSION=latest WP_MULTISITE=0
-    - WP_VERSION=latest WP_MULTISITE=1
+    - WP_VERSION=4.3 WP_MULTISITE=0
+    - WP_VERSION=4.3 WP_MULTISITE=1
     - WP_VERSION=4.1 WP_MULTISITE=0
     - WP_VERSION=4.1 WP_MULTISITE=1
 
 before_script:
-    - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-    - php bin/install-dependencies.php
     - cp tests/wapuu-original.png /tmp/wapuu-original.png
     - cp tests/wapuu-original.svg /tmp/wapuu-original.svg
+    - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+    - php bin/install-dependencies.php
+
 
 script: phpunit
