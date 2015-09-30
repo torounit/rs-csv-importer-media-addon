@@ -84,18 +84,19 @@ Class RS_CSV_Importer_Media_Plus extends RS_CSV_Importer {
 			if ( $this->cache->is_cached( $value ) ) {
 				$meta[ $key ] = $this->cache->get( $value );
 			}
-			else if ( $this->is_media( $value ) ) {
+			else if ( $this->is_media_uri( $value ) ) {
 				$file         = $h->remoteGet( $value );
 				$attachment   = $h->setAttachment( $file );
 				$meta[ $key ] = $attachment;
 				$this->cache->set( $value, $attachment );
 			}
-			else if ( file_exists( $value ) ) {
+			else if ( file_exists( $value ) and $this->is_valid_type( $value ) ) {
 				$attachment   = $h->setAttachment( $value );
 				$meta[ $key ] = $attachment;
 				$this->cache->set( $value, $attachment );
 			}
 		}
+
 		return $meta;
 	}
 
@@ -105,13 +106,22 @@ Class RS_CSV_Importer_Media_Plus extends RS_CSV_Importer {
 	 *
 	 * @return bool
 	 */
-	public function is_media( $value ) {
-		if ( is_string( $value ) && parse_url( $value, PHP_URL_SCHEME ) ) {
-			$path_arr = explode( ".", $value );
-			$ext      = array_pop( $path_arr );
-			if ( wp_ext2type( $ext ) ) {
-				return true;
-			}
+	public function is_media_uri( $value ) {
+		if( ! is_string( $value ) ) {
+			return false;
+		}
+
+		if ( parse_url( $value, PHP_URL_SCHEME ) ) {
+			return $this->is_valid_type( $value );
+		}
+		return false;
+	}
+
+	public function is_valid_type( $path ) {
+		$path_arr = explode( ".", $path );
+		$ext      = array_pop( $path_arr );
+		if ( wp_ext2type( $ext ) ) {
+			return true;
 		}
 		return false;
 	}

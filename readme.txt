@@ -4,7 +4,7 @@ Donate link:        http://www.amazon.co.jp/registry/wishlist/COKSXS25MVQV
 Tags:               importer, csv, rscsv,
 Requires at least:  4.1
 Tested up to:       4.2
-Stable tag:         1.0.0
+Stable tag:         1.1.0
 License:            GPLv2 or later
 License URI:        http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ function really_simple_csv_importer_media_ext2type( $types ) {
 `
 
 == Changelog ==
+
+
+= 1.1.0 =
+* Support Local File Path.
 
 = 1.0.0 =
 * First Release.
