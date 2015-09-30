@@ -37,11 +37,9 @@ class Import_Test extends WP_UnitTestCase {
 	 */
 	public function test_url_convert() {
 
-
-		//var_dump(get_posts([ 'post_type' => 'attachment' ]));
 		$posts = get_posts();
 		$post = reset($posts);
-		$image = get_post_meta( $post->ID, 'image', true );
+		$image = get_post_meta( $post->ID, 'png', true );
 		$attachment = get_post( $image );
 		$this->assertEquals( 'attachment', $attachment->post_type );
 
@@ -58,11 +56,13 @@ class Import_Test extends WP_UnitTestCase {
 
 		$posts = get_posts();
 		$post = reset($posts);
-		$image = get_post_meta( $post->ID, 'local_image', true );
+		$image = get_post_meta( $post->ID, 'local_png', true );
 		$attachment = get_post( $image );
 		$this->assertEquals( 'attachment', $attachment->post_type );
 
 	}
+
+
 
 	/**
 	 *
@@ -76,6 +76,10 @@ class Import_Test extends WP_UnitTestCase {
 		$post = reset($posts);
 		$url = get_post_meta( $post->ID, 'url', true );
 		$this->assertEquals( 'https://github.com/jawordpressorg/wapuu/', $url );
+		$svg = get_post_meta( $post->ID, 'svg', true );
+		$this->assertEquals( 'https://github.com/jawordpressorg/wapuu/blob/gh-pages/wapuu-original/wapuu-original.svg', $svg );
+		$local_svg = get_post_meta( $post->ID, 'local_svg', true );
+		$this->assertEquals( '/tmp/wapuu-original.svg', $local_svg );
 	}
 
 

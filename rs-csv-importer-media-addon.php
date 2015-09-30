@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: RS CSV Importer Media Add-On
-Version: 1.0.0
+Version: 1.1.0
 Description: Really Simple CSV Importer Add-on. Media's URL (Images, Documents... etc) in CSV, Download Media and Convert url to attachment ID.
 Author: Toro_Unit
 Author URI: http://www.torounit.com
-Plugin URI: PLUGIN SITE HERE
+Plugin URI: https://github.com/torounit/rs-csv-importer-media-addon
 Text Domain: rs-csv-importer-media-addon
 Domain Path: /languages
 */
