@@ -14,6 +14,8 @@ Really Simple CSV Importer Add-on. Media's URL (Images, Documents... etc) in CSV
 
 [Really Simple CSV Importer](https://wordpress.org/plugins/really-simple-csv-importer/) Add-on.
 
+[Github Repository](https://github.com/torounit/rs-csv-importer-media-addon)
+
 Media's URL (Images, Documents... etc) in CSV, Download Media and Convert url to attachment ID.
 
 
