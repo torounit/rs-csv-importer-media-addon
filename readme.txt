@@ -3,7 +3,7 @@ Contributors:       Toro_Unit
 Donate link:        http://www.amazon.co.jp/registry/wishlist/COKSXS25MVQV
 Tags:               importer, csv, rscsv,
 Requires at least:  4.1
-Tested up to:       4.2
+Tested up to:       4.3
 Stable tag:         1.1.0
 License:            GPLv2 or later
 License URI:        http://www.gnu.org/licenses/gpl-2.0.html
@@ -53,6 +53,7 @@ function really_simple_csv_importer_media_ext2type( $types ) {
 
 = 1.1.0 =
 * Support Local File Path.
+* Add Unit Test.
 
 = 1.0.0 =
 * First Release.
